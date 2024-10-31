@@ -10,6 +10,9 @@ require 'rim/rim_exception'
 require 'rim/version'
 require 'tmpdir'
 
+require 'amazing_print'
+require 'byebug'
+
 include Subcommands
 
 # -C option was added in 1.8.5
@@ -73,7 +76,16 @@ ObjectSpace.each_object(Class).select{|clazz| clazz < RIM::Command::Command }.ea
     commands[name] = cmd;
   end
 end
-ARGV.unshift("help") if ARGV.empty?
+# args = %w[upload test]
+# args = %w[sync -a -u https://github.com/sudeeptarlekar/r-rim -r master Änderungen]
+# args = %w[sync -a -r main Änderungen]
+args = %w[info]
+# args = %w[status -w 02f21f8603d7fc65ec3c02cf14b39661868c7b64]
+# args = %w[clean tmp]
+# args = %w[status 176c52360956ed29a7a85e140e768f067446e3e0..287e19c9f997f1e335d1fae02ab9ba48e634c8e2]
+# args = %w[status e592582fdb02b06d62ca766cb7b11e25dc9d9a2e..f389c4e49b14efa2640dbb0149255fa1f13b7db8]
+# args = %w[info]
+ARGV.unshift(*args) if ARGV.empty?
 begin
   cmdname = opt_parse()
   if cmdname
